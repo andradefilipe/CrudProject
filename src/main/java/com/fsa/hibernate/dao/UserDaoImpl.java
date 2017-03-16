@@ -49,4 +49,13 @@ public class UserDaoImpl implements IUserDao {
 
 	}
 
+	@Override
+	public User addUser(User user) {
+		manager.getTransaction().begin();
+		manager.persist(user);
+		manager.getTransaction().commit();
+
+		return user;
+	}
+
 }

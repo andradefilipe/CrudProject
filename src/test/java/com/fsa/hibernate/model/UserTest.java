@@ -1,45 +1,28 @@
 package com.fsa.hibernate.model;
 
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+
+import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-
-import com.fsa.hibernate.dao.UserDaoImpl;
 
 public class UserTest {
 
-	private EmbeddedDatabase db;
-
-	UserDaoImpl userDao;
-
-	@Before
-	public void setUp() {
-		db = new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).addScript("db/sql/create-db.sql")
-				.addScript("db/sql/insert-data.sql").build();
-	}
-
 	@Test
-	public void testFindByname() {
-		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(db);
-		UserDaoImpl userDao = new UserDaoImpl();
-		userDao.setNamedParameterJdbcTemplate(template);
+	public void testNewUserHasUuid() {
+		Phone phone = new Phone("31", "4354546");
 
-		List<User> users = userDao.findAll();
+		List<Phone> phones = new ArrayList<>();
+		phones.add(phone);
 
-		Assert.assertNotNull(users);
+		User user = new User("UserName", "UserEmail", "UserPassword", phones);
 
-	}
-
-	@After
-	public void tearDown() {
-		db.shutdown();
+		Assert.assertThat(user.getId(), not(nullValue()));
+		Assert.assertThat(user.getPhones(), contains(phone));
 	}
 
 }

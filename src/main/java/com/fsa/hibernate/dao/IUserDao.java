@@ -6,8 +6,10 @@ import com.fsa.hibernate.model.User;
 
 public interface IUserDao {
 
-	User findByName(String name);
+	public User findByName(String name);
 
-	List<User> findAll();
+	public List<User> findAll();
+
+	public User addUser(User user);
 
 }

@@ -7,7 +7,6 @@
 	<persistence-unit name="app" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>com.fsa.hibernate.model.User</class>
-		<class>com.fsa.hibernate.model.Phone</class>
 		
 		
 		<properties>
